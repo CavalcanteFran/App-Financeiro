@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#101c18"><meta name="description" content="Organize contas, gastos, orçamentos e metas em um só lugar.">
+  <title>Horizonte — Finanças pessoais</title><link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="#dashboard"><span class="brand-mark">h.</span><span>horizonte<small>FINANÇAS PESSOAIS</small></span></a>
+    <div class="side-label">ESPAÇO PESSOAL</div>
+    <nav id="navigation" aria-label="Navegação principal">
+      <button class="nav-item active" data-page="dashboard"><span>◫</span> Visão geral</button>
+      <button class="nav-item" data-page="transactions"><span>↕</span> Transações <i class="nav-count" id="nav-transactions">0</i></button>
+      <button class="nav-item" data-page="accounts"><span>▤</span> Contas</button>
+      <button class="nav-item" data-page="cards"><span>▭</span> Cartões</button>
+      <button class="nav-item" data-page="budgets"><span>◷</span> Orçamentos</button>
+      <button class="nav-item" data-page="goals"><span>◎</span> Metas</button>
+      <button class="nav-item" data-page="reports"><span>⌁</span> Relatórios</button>
+      <button class="nav-item" data-page="history"><span>◷</span> Histórico</button>
+    </nav>
+    <div class="sidebar-bottom"><div class="sidebar-tip"><div class="tip-icon">✳</div><b>Pequenos passos.<br>Grandes planos.</b><p>Seu futuro financeiro começa com clareza.</p></div>
+    <button class="nav-item" data-page="settings"><span>⚙</span> Configurações</button>
+    <div class="profile"><div class="avatar">F</div><div><b>Meu espaço</b><small>Conta pessoal</small></div><span class="profile-dots">···</span></div></div>
+  </aside>
+  <main class="main-area">
+    <header class="topbar"><button class="mobile-menu" id="mobile-menu" aria-label="Abrir menu">☰</button><div class="breadcrumb">Meu espaço <span>/</span> <b id="page-title">Visão geral</b></div>
+    <div class="top-actions"><button class="icon-button notification-button" id="notification-button" aria-label="Notificações">♧<i id="notification-dot"></i></button><button class="button button-primary button-small" id="quick-add">＋ <span>Novo lançamento</span></button></div></header>
+    <div class="content" id="content"></div>
+  </main>
+</div>
+<div id="modal-root"></div><div class="toast-region" id="toast-region" aria-live="polite"></div>
+<script src="app.js"></script>
+</body></html>
