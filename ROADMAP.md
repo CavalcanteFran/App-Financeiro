@@ -10,7 +10,8 @@
 - O banco já contém `accounts` e `transactions` com tenant `space_id`, IDs `text` e dinheiro em centavos. A migration genérica baseada em `user_id` não se aplica e está marcada como rascunho incompatível.
 - RLS está habilitada em `accounts`, `transactions`, `finance_space_members` e `finance_spaces`. As políticas limitam criação ao usuário autenticado e administração aos proprietários; as funções de checagem usam `SECURITY DEFINER`, `search_path` vazio e `auth.uid()`. As FKs garantem que contas pertençam a espaços e que transações apontem para conta/cartão do mesmo espaço. Ainda falta testar isolamento entre dois usuários.
 - O app agora mostra login Supabase antes de qualquer dashboard, separa o `localStorage` por usuário e inclui solicitação de link de recuperação e atualização da senha após retorno pelo link. Contas, lançamentos e outros dados financeiros continuam locais, sem sincronização.
-- A tela de Configurações inclui diagnóstico do banco, cadastro/login/logout e leitura/seleção de espaços. O usuário confirmou “Conexão com o banco confirmada”; o cadastro foi criado, mas a imagem mostrava que a sessão ainda não estava autenticada.
+- A tela de Configurações inclui diagnóstico do banco, cadastro/login/logout e leitura/seleção de espaços. O usuário confirmou “Conexão com o banco confirmada” e “Conta criada com sucesso”.
+- Moeda e formato de data agora são carregados e salvos por espaço na tabela `finance_space_preferences`, protegida por RLS. Aplicar `supabase/migrations/202610270003_space_preferences.sql` no SQL Editor ainda é necessário antes de usar essa persistência.
 
 ## Etapas
 
@@ -38,7 +39,7 @@ A tela de login agora é a primeira tela; o restante do app permanece oculto sem
 
 ### 4. Persistência Supabase
 
-Substituir progressivamente o `localStorage` como fonte principal por consultas autenticadas. Começar por contas e transações; depois orçamentos e metas. Definir uma importação de dados locais que apresente prévia e não duplique registros.
+Moeda e formato de data estão conectados à nova tabela `finance_space_preferences`; falta executar a migration e confirmar leitura/escrita pelo app. Substituir progressivamente o `localStorage` como fonte principal por consultas autenticadas. Começar por contas e transações; depois cartões, orçamentos e metas. Definir uma importação de dados locais que apresente prévia e não duplique registros.
 
 ### 5. Integridade financeira
 
