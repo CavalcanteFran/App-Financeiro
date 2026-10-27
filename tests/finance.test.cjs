@@ -10,6 +10,7 @@ function element(id) {
   return elements.get(id);
 }
 const store = new Map();
+const bodyClasses = new Set();
 const context = vm.createContext({
   console,
   Intl,
@@ -29,6 +30,7 @@ const context = vm.createContext({
     setItem(key, value) { store.set(key, value); },
   },
   document: {
+    body: { classList: { add(name) { bodyClasses.add(name); }, remove(name) { bodyClasses.delete(name); }, contains(name) { return bodyClasses.has(name); } } },
     querySelector(selector) { return selector === '#trend-chart' ? null : element(selector); },
     querySelectorAll() { return []; },
     addEventListener() {},
@@ -42,6 +44,27 @@ const context = vm.createContext({
 const source = fs.readFileSync(path.join(__dirname, '..', 'app.js'), 'utf8');
 vm.runInContext(source, context, { filename: 'app.js' });
 const run = expression => vm.runInContext(expression, context);
+
+test('mantém o dashboard oculto e mostra login antes da autenticação', () => {
+  assert.equal(bodyClasses.has('auth-required'), true);
+  assert.equal(run("$('#auth-gate').hidden"), false);
+  const markup = run('authGateMarkup()');
+  assert.match(markup, /Usuário \(e-mail\)/);
+  assert.match(markup, /type="password"/);
+  assert.doesNotMatch(markup, /Saldo total|Salário|Aluguel/);
+  assert.equal(store.has('horizonte-finance-v1'), false);
+});
+
+test('mostra fluxos separados para solicitar e concluir redefinição de senha', () => {
+  run(`authView='recovery';authMessage='';authEmailDraft='user@example.com'`);
+  const requestMarkup = run('authGateMarkup()');
+  assert.match(requestMarkup, /Enviar link de recuperação/);
+  assert.match(requestMarkup, /user@example\.com/);
+  run(`authView='update-password'`);
+  const updateMarkup = run('authGateMarkup()');
+  assert.match(updateMarkup, /Defina uma nova senha/);
+  assert.match(updateMarkup, /Confirmar nova senha/);
+});
 
 test('converte valores monetários para centavos inteiros', () => {
   assert.equal(run('cents(12.34)'), 1234);
@@ -78,4 +101,12 @@ test('não soma saldos de moedas diferentes', () => {
 test('deduplica alertas da mesma ocorrência', () => {
   run(`state.notifications=[];addNotification('Limite','80% utilizado','normal','budget-x');addNotification('Limite','80% utilizado','normal','budget-x')`);
   assert.equal(run('state.notifications.length'), 1);
+});
+
+test('separa o armazenamento local por usuário autenticado', () => {
+  run(`supabaseUser={id:'user-a'};state=emptyState();state.accounts=[{id:'a'}];save()`);
+  assert.equal(store.has('horizonte-finance-v1:user-a'), true);
+  assert.equal(store.has('horizonte-finance-v1'), false);
+  run(`supabaseUser=null;loadUserState({id:'user-b'})`);
+  assert.equal(run('state.accounts.length'), 0);
 });
