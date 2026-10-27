@@ -1,4 +1,4 @@
-# Horizonte — Finanças pessoais
+# Wonder Finances — Finanças pessoais
 
 Aplicação web de controle financeiro pessoal em português, criada para funcionar sem instalar dependências. A interface usa HTML, CSS e JavaScript. As preferências de moeda e formato de data podem ser salvas no Supabase por espaço financeiro; os dados financeiros ainda ficam no `localStorage` deste navegador.
 

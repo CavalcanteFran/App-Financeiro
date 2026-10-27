@@ -1,4 +1,4 @@
-# Publicar o Horizonte no GitHub Pages
+# Publicar o Wonder Finances no GitHub Pages
 
 O repositório configurado é `CavalcanteFran/App-Financeiro`, na branch `master`. O workflow `.github/workflows/deploy-pages.yml` publica somente `index.html`, `styles.css`, `app.js` e `supabase-client.js`; não publica migrations, documentação, testes ou o `.env`.
 
@@ -8,7 +8,7 @@ O repositório configurado é `CavalcanteFran/App-Financeiro`, na branch `master
 2. Em **Build and deployment**, selecione **GitHub Actions** como fonte.
 3. Após a branch `master` receber o workflow, a publicação roda automaticamente. O endereço padrão esperado é `https://cavalcantefran.github.io/App-Financeiro/`.
 4. Em Supabase → **Authentication** → **URL Configuration**, configure esse endereço como **Site URL** e inclua o mesmo endereço em **Redirect URLs**, para links de confirmação de e-mail voltarem ao app.
-5. Aguarde o job `Deploy Horizonte to GitHub Pages` em **Actions** finalizar e abra a URL indicada pelo próprio deploy.
+5. Aguarde o job `Deploy Wonder Finances to GitHub Pages` em **Actions** finalizar e abra a URL indicada pelo próprio deploy.
 
 ## Antes de usar
 

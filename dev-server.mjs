@@ -52,7 +52,7 @@ const servers = ['127.0.0.1', '::1'].map(host => {
     console.error(`Could not listen on ${host}:3000 (${error.code})`);
     process.exitCode = 1;
   });
-  server.listen(3000, host, () => console.log(`Horizonte local: http://${host}:3000`));
+  server.listen(3000, host, () => console.log(`Wonder Finances local: http://${host}:3000`));
   return server;
 });
 

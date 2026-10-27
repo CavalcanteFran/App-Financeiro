@@ -1,4 +1,4 @@
-# Roadmap — Horizonte
+# Roadmap — Wonder Finances
 
 ## Estado atual
 

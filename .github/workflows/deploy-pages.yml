@@ -1,4 +1,4 @@
-name: Deploy Horizonte to GitHub Pages
+name: Deploy Wonder Finances to GitHub Pages
 
 on:
   push:
